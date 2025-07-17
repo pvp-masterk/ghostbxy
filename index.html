@@ -5,108 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOODIEBXY | Night Call</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff4d4d;
-            --secondary: #1a1a1a;
-            --accent: #ffcc00;
-            --text: #ffffff;
-            --text-secondary: #b3b3b3;
+            --primary: #000;
+            --secondary: #fff;
+            --accent: #1DB954;
+            --text: #e0e0e0;
+            --bg: #121212;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
         }
         
         body {
-            background-color: var(--secondary);
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
             color: var(--text);
             overflow-x: hidden;
         }
         
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Header */
-        header {
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
-            position: fixed;
-            width: 100%;
+            padding: 20px 50px;
             z-index: 100;
-            background: rgba(26, 26, 26, 0.8);
+            background: rgba(0,0,0,0.8);
             backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease-out;
+            transition: all 0.3s ease;
         }
         
         .logo {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 5px;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+            letter-spacing: 2px;
         }
         
-        .logo span {
-            color: var(--accent);
-        }
-        
-        nav ul {
+        .nav-links {
             display: flex;
-            list-style: none;
+            gap: 30px;
         }
         
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        nav ul li a {
+        .nav-links a {
             color: var(--text);
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
             position: relative;
         }
         
-        nav ul li a:hover {
-            color: var(--primary);
+        .nav-links a:hover {
+            color: var(--secondary);
         }
         
-        nav ul li a::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             width: 0;
             height: 2px;
-            background: var(--primary);
             bottom: -5px;
             left: 0;
-            transition: width 0.3s;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
         }
         
-        nav ul li a:hover::after {
+        .nav-links a:hover::after {
             width: 100%;
         }
         
@@ -114,94 +88,46 @@
         .hero {
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 0 5%;
+            align-items: center;
+            padding: 0 100px;
             position: relative;
             overflow: hidden;
         }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 77, 77, 0.1) 0%, rgba(26, 26, 26, 0.9) 100%);
-            z-index: -1;
+        .hero-content {
+            width: 50%;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 80%;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.6s;
         }
         
         .hero-bg {
             position: absolute;
+            right: 0;
             top: 0;
-            left: 0;
-            width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            opacity: 0.5;
-        }
-        
-        .hero-content {
-            max-width: 600px;
-            animation: slideUp 1s ease-out;
-        }
-        
-        .hero h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1;
-            text-transform: uppercase;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero h2 {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-        
-        .hero p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: var(--primary);
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 50px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            margin-left: 1rem;
-        }
-        
-        .btn-outline:hover {
-            background: var(--primary);
+            width: 60%;
+            background: linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0) 100%), url('https://example.com/hoodiebxy-image.jpg') center/cover no-repeat;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards 1s;
         }
         
         /* Music Player */
@@ -210,40 +136,43 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
+            background: rgba(0,0,0,0.9);
+            padding: 15px 30px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             z-index: 90;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            animation: slideUp 0.5s ease-out;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         .song-info {
             display: flex;
             align-items: center;
+            gap: 15px;
             width: 25%;
         }
         
         .song-cover {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 5px;
-            margin-right: 1rem;
             object-fit: cover;
-            animation: pulse 2s infinite;
+            animation: rotateAlbum 20s linear infinite;
+            animation-play-state: paused;
+        }
+        
+        .player-container.playing .song-cover {
+            animation-play-state: running;
         }
         
         .song-details h4 {
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
         
         .song-details p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+            font-size: 12px;
+            color: #aaa;
         }
         
         .player-controls {
@@ -256,360 +185,383 @@
         .controls {
             display: flex;
             align-items: center;
-            margin-bottom: 0.5rem;
+            gap: 25px;
+            margin-bottom: 10px;
         }
         
-        .control-btn {
-            background: none;
+        .controls button {
+            background: transparent;
             border: none;
             color: var(--text);
-            font-size: 1.2rem;
-            margin: 0 1rem;
+            font-size: 16px;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
         
-        .control-btn:hover {
+        .controls button:hover {
+            color: var(--secondary);
+        }
+        
+        .controls button.play-pause {
+            background: var(--secondary);
             color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
         
-        .play-btn {
-            font-size: 2rem;
+        .controls button.play-pause:hover {
+            transform: scale(1.05);
         }
         
         .progress-container {
             width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
             cursor: pointer;
         }
         
         .progress {
             height: 100%;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            border-radius: 5px;
+            background: var(--accent);
+            border-radius: 2px;
             width: 0%;
-            transition: width 0.1s;
+            position: relative;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .progress-container:hover .progress::after {
+            opacity: 1;
         }
         
         .time-info {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #aaa;
         }
         
         .player-extra {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            gap: 20px;
             width: 25%;
+            justify-content: flex-end;
         }
         
         .volume-container {
             display: flex;
             align-items: center;
-            margin-right: 1rem;
+            gap: 10px;
         }
         
         .volume-slider {
             width: 80px;
-            margin-left: 0.5rem;
-            -webkit-appearance: none;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-        
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
             cursor: pointer;
         }
         
-        /* Next Up Section */
-        .next-up {
-            padding: 5rem 5%;
-            background: var(--secondary);
+        .volume-progress {
+            height: 100%;
+            background: var(--text);
+            border-radius: 2px;
+            width: 100%;
         }
         
-        .section-title {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 3rem;
-            text-transform: uppercase;
+        /* Pages */
+        .page {
+            min-height: 100vh;
+            padding: 100px 50px;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .page-title {
+            font-size: 48px;
+            margin-bottom: 50px;
             position: relative;
             display: inline-block;
         }
         
-        .section-title::after {
+        .page-title::after {
             content: '';
             position: absolute;
             bottom: -10px;
             left: 0;
             width: 50%;
             height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--accent));
+            background: var(--accent);
         }
         
-        .next-up-content {
+        /* Music Page */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .music-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .music-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .music-cover {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .music-info {
+            padding: 15px;
+        }
+        
+        .music-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .music-info p {
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* About Page */
+        .about-content {
             display: flex;
-            justify-content: space-between;
+            gap: 50px;
             align-items: center;
         }
         
-        .next-up-text {
-            width: 50%;
-            animation: slideUp 0.8s ease-out;
-        }
-        
-        .next-up-text h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            color: var(--primary);
-        }
-        
-        .next-up-text p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-        
-        .next-up-image {
-            width: 45%;
-            animation: slideUp 1s ease-out;
-        }
-        
-        .next-up-image img {
-            width: 100%;
+        .about-image {
+            width: 40%;
             border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
-        /* Socials Section */
-        .socials {
-            padding: 5rem 5%;
-            background: #111;
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-text {
+            width: 60%;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .label-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        
+        /* Socials Page */
+        .socials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .social-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 30px;
             text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
+        .social-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
         }
         
         .social-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 1.5rem;
-            text-decoration: none;
-            color: var(--text);
-            transition: all 0.3s;
-            animation: fadeIn 1s ease-out;
-            animation-fill-mode: both;
-        }
-        
-        .social-icon:nth-child(1) { animation-delay: 0.2s; }
-        .social-icon:nth-child(2) { animation-delay: 0.4s; }
-        .social-icon:nth-child(3) { animation-delay: 0.6s; }
-        .social-icon:nth-child(4) { animation-delay: 0.8s; }
-        .social-icon:nth-child(5) { animation-delay: 1s; }
-        
-        .social-icon:hover {
-            color: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .social-icon i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .social-icon span {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Footer */
-        footer {
-            padding: 3rem 5%;
-            background: #000;
-            text-align: center;
-        }
-        
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-logo span {
+            font-size: 40px;
+            margin-bottom: 20px;
             color: var(--accent);
         }
         
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin-bottom: 2rem;
+        .social-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
         }
         
-        .footer-links li {
-            margin: 0 1rem;
+        .social-card p {
+            font-size: 14px;
+            color: #aaa;
         }
         
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .footer-links a:hover {
-            color: var(--primary);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
-        .copyright {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        @keyframes rotateAlbum {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
+            .hero {
+                padding: 0 50px;
+            }
+            
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            
             .hero h1 {
-                font-size: 3rem;
+                font-size: 48px;
             }
             
-            .hero h2 {
-                font-size: 1.2rem;
+            .hero p {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
             }
             
-            .next-up-content {
+            .hero-bg {
+                display: none;
+            }
+            
+            .about-content {
                 flex-direction: column;
             }
             
-            .next-up-text, .next-up-image {
+            .about-image, .about-text {
                 width: 100%;
             }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
             
-            .next-up-image {
-                margin-top: 2rem;
+            .logo {
+                font-size: 24px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 0 20px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
             }
             
             .player-container {
                 flex-direction: column;
-                padding: 1rem;
+                padding: 10px;
             }
             
             .song-info, .player-controls, .player-extra {
                 width: 100%;
                 justify-content: center;
-                margin-bottom: 1rem;
+                margin-bottom: 10px;
             }
             
-            .controls {
-                margin-bottom: 1rem;
+            .player-extra {
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">HOODIE<span>BXY</span></div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#music">Music</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#socials">Socials</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">HOODIEBXY</a>
+        <div class="nav-links">
+            <a href="#" class="nav-link active" data-page="home">Home</a>
+            <a href="#" class="nav-link" data-page="music">Music</a>
+            <a href="#" class="nav-link" data-page="about">About</a>
+            <a href="#" class="nav-link" data-page="socials">Socials</a>
+        </div>
+    </nav>
     
-    <section class="hero" id="home">
-        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="HoodieBxy Background" class="hero-bg">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="hero-content">
             <h1>NIGHT CALL</h1>
-            <h2>THE LATEST SINGLE FROM HOODIEBXY</h2>
-            <p>Experience the raw energy of HoodieBxy's newest hip-hop single "Night Call". Blending smooth flows with hard-hitting beats, this track showcases the artist's unique style and lyrical prowess.</p>
-            <div>
-                <a href="#" class="btn">Stream Now</a>
-                <a href="#" class="btn btn-outline">Watch Video</a>
-            </div>
+            <p>The latest single from HoodieBxy is out now on all platforms. Stream it on Apple Music, Spotify, and more.</p>
+            <button class="btn" id="play-hero">PLAY NOW</button>
         </div>
+        <div class="hero-bg"></div>
     </section>
     
-    <section class="next-up" id="music">
-        <h2 class="section-title">NEXT UP</h2>
-        <div class="next-up-content">
-            <div class="next-up-text">
-                <h3>Testing Purposes</h3>
-                <p>Testing Purposes</p>
-                <a href="#" class="btn">View All Releases</a>
-            </div>
-            <div class="next-up-image">
-                <img src="https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="HoodieBxy Next Up">
-            </div>
-        </div>
-    </section>
-    
-    <section class="socials" id="socials">
-        <h2 class="section-title">REAL TALK</h2>
-        <p>Connect with HoodieBxy across all platforms</p>
-        <div class="social-icons">
-            <a href="#" class="social-icon">
-                <i class="fab fa-apple"></i>
-                <span>Apple Music</span>
-            </a>
-            <a href="#" class="social-icon">
-                <i class="fab fa-spotify"></i>
-                <span>Spotify</span>
-            </a>
-            <a href="#" class="social-icon">
-                <i class="fab fa-instagram"></i>
-                <span>Instagram</span>
-            </a>
-            <a href="#" class="social-icon">
-                <i class="fab fa-youtube"></i>
-                <span>YouTube</span>
-            </a>
-            <a href="#" class="social-icon">
-                <i class="fab fa-discord"></i>
-                <span>Discord</span>
-            </a>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="footer-logo">HOODIE<span>BXY</span></div>
-        <ul class="footer-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#music">Music</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#socials">Socials</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <p class="copyright">© 2025 HoodieBxy. All Rights Reserved. Under exclusive license to Apple Music.</p>
-    </footer>
-    
+    <!-- Music Player -->
     <div class="player-container">
         <div class="song-info">
-            <img src="https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Night Call Cover" class="song-cover">
+            <img src="https://via.placeholder.com/150" alt="Night Call" class="song-cover">
             <div class="song-details">
                 <h4>Night Call</h4>
                 <p>HoodieBxy</p>
@@ -618,15 +570,17 @@
         
         <div class="player-controls">
             <div class="controls">
-                <button class="control-btn"><i class="fas fa-random"></i></button>
-                <button class="control-btn"><i class="fas fa-step-backward"></i></button>
-                <button class="control-btn play-btn"><i class="fas fa-play"></i></button>
-                <button class="control-btn"><i class="fas fa-step-forward"></i></button>
-                <button class="control-btn"><i class="fas fa-redo"></i></button>
+                <button class="shuffle"><i class="fas fa-random"></i></button>
+                <button class="prev"><i class="fas fa-step-backward"></i></button>
+                <button class="play-pause"><i class="fas fa-play"></i></button>
+                <button class="next"><i class="fas fa-step-forward"></i></button>
+                <button class="repeat"><i class="fas fa-redo"></i></button>
             </div>
+            
             <div class="progress-container">
                 <div class="progress"></div>
             </div>
+            
             <div class="time-info">
                 <span class="current-time">0:00</span>
                 <span class="duration">3:45</span>
@@ -635,39 +589,161 @@
         
         <div class="player-extra">
             <div class="volume-container">
-                <i class="fas fa-volume-up"></i>
-                <input type="range" class="volume-slider" min="0" max="100" value="80">
+                <button class="volume-btn"><i class="fas fa-volume-up"></i></button>
+                <div class="volume-slider">
+                    <div class="volume-progress"></div>
+                </div>
             </div>
         </div>
     </div>
     
+    <!-- Music Page -->
+    <section class="page" id="music-page">
+        <h2 class="page-title">DISCOGRAPHY</h2>
+        <div class="music-grid">
+            <div class="music-card" data-song="night-call">
+                <img src="https://via.placeholder.com/300" alt="Night Call" class="music-cover">
+                <div class="music-info">
+                    <h3>Night Call</h3>
+                    <p>Single • 2023</p>
+                </div>
+            </div>
+            <!-- More music cards can be added here -->
+        </div>
+    </section>
+    
+    <!-- About Page -->
+    <section class="page" id="about-page">
+        <h2 class="page-title">ABOUT</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://via.placeholder.com/600" alt="HoodieBxy">
+            </div>
+            <div class="about-text">
+                <p>HoodieBxy 2022 - Present, is one of the most raw and original voices in today's underground scene. known for his cloudy flows and emotionallly cold delivery.</p>
+                <p> His music lives in the genre between Cloud Rap, Trap, and Ambient Hip-Hop, pulling from heartbreak and street life to create something dark, real, and deeply personal.</p>
+                <div class="label-info">
+                    <h3>Fearless Ghosts Entertainment</h3>
+                    <p>HoodieBxy is signed to Fearless Ghosts Entertainment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Socials Page -->
+    <section class="page" id="socials-page">
+        <h2 class="page-title">CONNECT</h2>
+        <div class="socials-grid">
+            <a href="https://music.apple.com/us/artist/hoodiebxy/1775615720" target="_blank" class="social-card">
+                <div class="social-icon"><i class="fab fa-apple"></i></div>
+                <h3>Apple Music</h3>
+                <p>Stream on Apple Music</p>
+            </a>
+            <a href="#" target="_blank" class="social-card">
+                <div class="social-icon"><i class="fab fa-discord"></i></div>
+                <h3>Discord</h3>
+                <p>murdavetz</p>
+            </a>
+          
+           
+            <a href="https://open.spotify.com/artist/hoodiebxy" target="_blank" class="social-card">
+                <div class="social-icon"><i class="fab fa-spotify"></i></div>
+                <h3>Spotify</h3>
+                <p>Stream on Spotify</p>
+            </a>
+            <a href="https://youtube.com/hoodiebxy" target="_blank" class="social-card">
+                <div class="social-icon"><i class="fab fa-youtube"></i></div>
+                <h3>YouTube</h3>
+                <p>Music videos</p>
+            </a>
+        </div>
+    </section>
+
     <script>
-        // Music Player Functionality
-        const audio = new Audio('https://cdn.discordapp.com/attachments/1395135057059905666/1395291102789111858/6astard-x-ashura-kai-night-call-140-d-min.wav?ex=6879e99a&is=6878981a&hm=bd21422a63dc562633f95ce30831f67714e9174db72d6d9c2a1d3a27ad740001&'); // Replace with actual song URL
-        const playBtn = document.querySelector('.play-btn');
-        const progressContainer = document.querySelector('.progress-container');
-        const progress = document.querySelector('.progress');
-        const currentTimeEl = document.querySelector('.current-time');
-        const durationEl = document.querySelector('.duration');
-        const volumeSlider = document.querySelector('.volume-slider');
-        
-        // Play/Pause
+        // Audio setup
+        const audio = new Audio('https://cdn.discordapp.com/attachments/1395135057059905666/1395291102789111858/6astard-x-ashura-kai-night-call-140-d-min.wav?ex=6879e99a&is=6878981a&hm=bd21422a63dc562633f95ce30831f67714e9174db72d6d9c2a1d3a27ad740001&'); // Replace with your actual music file
         let isPlaying = false;
         
+        // Player elements
+        const playPauseBtn = document.querySelector('.play-pause');
+        const progress = document.querySelector('.progress');
+        const progressContainer = document.querySelector('.progress-container');
+        const currentTimeEl = document.querySelector('.current-time');
+        const durationEl = document.querySelector('.duration');
+        const playerContainer = document.querySelector('.player-container');
+        const songCover = document.querySelector('.song-cover');
+        const heroPlayBtn = document.getElementById('play-hero');
+        
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        
+        // Update time
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', () => {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playerContainer.classList.remove('playing');
+            isPlaying = false;
+        });
+        
+        // Play/Pause
+        playPauseBtn.addEventListener('click', togglePlay);
+        heroPlayBtn.addEventListener('click', function() {
+            if (!isPlaying) {
+                togglePlay();
+                scrollToPlayer();
+            }
+        });
+        
+        // Progress bar click
+        progressContainer.addEventListener('click', setProgress);
+        
+        // Navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                
+                // Update active nav link
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show selected page
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById(`${pageId}-page`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // Music cards
+        const musicCards = document.querySelectorAll('.music-card');
+        musicCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const song = this.getAttribute('data-song');
+                // In a real implementation, you would load the selected song
+                if (!isPlaying) {
+                    togglePlay();
+                }
+                scrollToPlayer();
+            });
+        });
+        
+        // Functions
         function togglePlay() {
             if (isPlaying) {
                 audio.pause();
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playerContainer.classList.remove('playing');
             } else {
                 audio.play();
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playerContainer.classList.add('playing');
             }
             isPlaying = !isPlaying;
         }
         
-        playBtn.addEventListener('click', togglePlay);
-        
-        // Update progress bar
         function updateProgress(e) {
             const { duration, currentTime } = e.srcElement;
             const progressPercent = (currentTime / duration) * 100;
@@ -676,19 +752,22 @@
             // Update time display
             const durationMinutes = Math.floor(duration / 60);
             let durationSeconds = Math.floor(duration % 60);
-            if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
-            
-            const currentMinutes = Math.floor(currentTime / 60);
-            let currentSeconds = Math.floor(currentTime % 60);
-            if (currentSeconds < 10) currentSeconds = `0${currentSeconds}`;
+            if (durationSeconds < 10) {
+                durationSeconds = `0${durationSeconds}`;
+            }
             
             if (duration) {
                 durationEl.textContent = `${durationMinutes}:${durationSeconds}`;
             }
+            
+            const currentMinutes = Math.floor(currentTime / 60);
+            let currentSeconds = Math.floor(currentTime % 60);
+            if (currentSeconds < 10) {
+                currentSeconds = `0${currentSeconds}`;
+            }
             currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`;
         }
         
-        // Set progress
         function setProgress(e) {
             const width = this.clientWidth;
             const clickX = e.offsetX;
@@ -696,28 +775,20 @@
             audio.currentTime = (clickX / width) * duration;
         }
         
-        // Volume control
-        function setVolume() {
-            audio.volume = this.value / 100;
+        function scrollToPlayer() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
         }
         
-        // Event listeners
-        audio.addEventListener('timeupdate', updateProgress);
-        audio.addEventListener('ended', () => {
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            isPlaying = false;
-        });
-        progressContainer.addEventListener('click', setProgress);
-        volumeSlider.addEventListener('input', setVolume);
+        // Initialize - show home page
+        document.getElementById('home-page').classList.add('active');
         
-        // Initialize volume
-        audio.volume = volumeSlider.value / 100;
-        
-        // Smooth scrolling for anchor links
+        // Smooth scroll for all links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
@@ -725,21 +796,18 @@
         });
         
         // Animation on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.next-up-text, .next-up-image, .social-icon');
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
             
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.animationPlayState = 'running';
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll(); // Run once on load
+            // Navbar effect
+            if (scrollPosition > 100) {
+                nav.style.padding = '15px 50px';
+                nav.style.background = 'rgba(0,0,0,0.9)';
+            } else {
+                nav.style.padding = '20px 50px';
+                nav.style.background = 'rgba(0,0,0,0.8)';
+            }
+        });
     </script>
 </body>
 </html>
