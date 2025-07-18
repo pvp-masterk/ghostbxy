@@ -4,28 +4,115 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HoodieBxy – Official Music Site</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="preload" href="/fonts/HoodieBxyCustomFont.woff2" as="font" type="font/woff2" crossorigin>
-  <script defer src="script.js"></script>
+  <style>
+    @font-face {
+      font-family: 'HoodieFont';
+      src: url('/fonts/HoodieBxyCustomFont.woff2') format('woff2');
+      font-display: swap;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'HoodieFont', sans-serif;
+      transition: background 0.5s, color 0.5s;
+      background: black;
+      color: white;
+    }
+
+    body.light {
+      background: white;
+      color: black;
+    }
+
+    #loadingScreen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #modeToggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 999;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .main-container {
+      padding: 60px 20px;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    .artist-name {
+      font-size: 3rem;
+    }
+
+    .label {
+      font-style: italic;
+    }
+
+    #musicPlayer {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100px;
+      background: #111;
+    }
+
+    .controls button {
+      font-size: 1.5rem;
+      margin: 0 10px;
+      background: none;
+      color: inherit;
+      border: none;
+      cursor: pointer;
+    }
+
+    #lyricsOverlay {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    #spotifyEmbed iframe {
+      width: 100%;
+      border: none;
+    }
+
+    .bio, #stats {
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body class="dark">
-  <!-- Loading Screen -->
   <div id="loadingScreen">
     <h1 class="logo-intro">HoodieBxy</h1>
     <p class="tagline">Official Music Experience</p>
   </div>
 
-  <!-- Toggle Light/Dark -->
   <button id="modeToggle">🌓</button>
 
-  <!-- Main Section -->
   <div class="main-container">
     <header>
       <h1 class="artist-name">HoodieBxy</h1>
-      <p class="label">Signed to HoodieWave™</p>
+      <p class="label">Signed to Fearless Ghost Entertainment™</p>
     </header>
 
-    <!-- Music Player -->
     <section id="musicPlayer">
       <canvas id="waveform"></canvas>
       <div class="controls">
@@ -33,29 +120,24 @@
         <button id="playPause">▶</button>
         <button id="nextTrack">⏭</button>
         <div class="track-info">
-          <span id="trackTitle">Track Title</span>
-          <span id="trackDuration">00:00</span>
+          <span id="trackTitle">Track Title</span> — <span id="trackDuration">00:00</span>
         </div>
       </div>
     </section>
 
-    <!-- Lyrics Overlay -->
     <div id="lyricsOverlay">
       <p id="lyricsLine">♪ ...</p>
     </div>
 
-    <!-- Spotify Embed -->
     <section id="spotifyEmbed">
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0e..." width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0e..." height="80" allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
     </section>
 
-    <!-- Artist Info -->
     <section class="bio">
       <h2>About HoodieBxy</h2>
       <p>A multi-genre artist redefining mood with each beat. Explore the HoodieBxy universe.</p>
     </section>
 
-    <!-- Stats Section -->
     <section id="stats">
       <h2>Streaming Stats</h2>
       <ul>
@@ -65,5 +147,99 @@
       </ul>
     </section>
   </div>
+
+  <audio id="audio" preload="metadata"></audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playPause = document.getElementById('playPause');
+    const trackTitle = document.getElementById('trackTitle');
+    const trackDuration = document.getElementById('trackDuration');
+    const lyricsLine = document.getElementById('lyricsLine');
+    const modeToggle = document.getElementById('modeToggle');
+    const loadingScreen = document.getElementById('loadingScreen');
+
+    const tracks = [
+      {
+        title: 'Dream State',
+        src: '/assets/music/track1.mp3',
+        lyrics: '/assets/lyrics/track1.lrc'
+      },
+      {
+        title: 'Midnight Drive',
+        src: '/assets/music/track2.mp3',
+        lyrics: '/assets/lyrics/track2.lrc'
+      }
+    ];
+
+    let currentTrack = 0;
+    let lyrics = [];
+    let lyricsIndex = 0;
+
+    function loadTrack(index) {
+      const track = tracks[index];
+      audio.src = track.src;
+      trackTitle.textContent = track.title;
+      loadLyrics(track.lyrics);
+    }
+
+    function loadLyrics(path) {
+      fetch(path)
+        .then(res => res.text())
+        .then(text => {
+          lyrics = text.split('\n').map(line => {
+            const match = line.match(/\[(\d+):(\d+).(\d+)\](.*)/);
+            if (!match) return null;
+            const [, min, sec, ms, textLine] = match;
+            const time = parseInt(min) * 60 + parseInt(sec) + parseInt(ms) / 1000;
+            return { time, text: textLine };
+          }).filter(Boolean);
+        });
+    }
+
+    playPause.onclick = () => {
+      if (audio.paused) {
+        audio.play();
+        playPause.textContent = '⏸';
+      } else {
+        audio.pause();
+        playPause.textContent = '▶';
+      }
+    };
+
+    document.getElementById('prevTrack').onclick = () => {
+      currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+      loadTrack(currentTrack);
+      audio.play();
+    };
+
+    document.getElementById('nextTrack').onclick = () => {
+      currentTrack = (currentTrack + 1) % tracks.length;
+      loadTrack(currentTrack);
+      audio.play();
+    };
+
+    audio.ontimeupdate = () => {
+      const current = audio.currentTime;
+      if (lyrics[lyricsIndex + 1] && current > lyrics[lyricsIndex + 1].time) {
+        lyricsIndex++;
+      }
+      if (lyrics[lyricsIndex]) {
+        lyricsLine.textContent = '♪ ' + lyrics[lyricsIndex].text;
+      }
+      const mins = Math.floor(current / 60);
+      const secs = Math.floor(current % 60).toString().padStart(2, '0');
+      trackDuration.textContent = `${mins}:${secs}`;
+    };
+
+    modeToggle.onclick = () => {
+      document.body.classList.toggle('light');
+    };
+
+    window.onload = () => {
+      setTimeout(() => loadingScreen.style.display = 'none', 1000);
+      loadTrack(currentTrack);
+    };
+  </script>
 </body>
 </html>
