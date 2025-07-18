@@ -1,76 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HoodieBxy Music</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HoodieBxy | Music Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'CustomFont', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark {
+      background: #0e0e0e;
+      color: white;
+    }
+
+    .light {
+      background: #f5f5f5;
+      color: black;
+    }
+
+    header {
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .toggle-btn {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: #333;
+      color: white;
+      border-radius: 8px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 2rem;
+      justify-content: center;
+    }
+
+    .music-card {
+      width: 300px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1rem;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease;
+    }
+
+    .music-card:hover {
+      transform: scale(1.02);
+    }
+
+    .waveform {
+      height: 100px;
+      background: #444;
+      margin-top: 1rem;
+    }
+
+    .stats, .artist-info {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-size: 2rem;
+      animation: fadeOut 1s ease 2s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+  </style>
 </head>
-<body>
-
-  <!-- Loading Screen -->
-  <div id="loadingScreen">
-    <div class="spinner"></div>
-    <h1>HoodieBxy</h1>
-  </div>
-
-  <!-- Header -->
+<body class="dark">
+  <div class="loading-screen">Loading HoodieBxy...</div>
   <header>
-    <h1>HoodieBxy</h1>
-    <button id="themeToggle">🌓</button>
+    <div class="logo">HoodieBxy</div>
+    <button class="toggle-btn" onclick="toggleTheme()">Toggle Theme</button>
   </header>
 
-  <!-- Music Player -->
-  <main>
-    <section class="player">
-      <canvas id="waveform"></canvas>
-      <div class="controls">
-        <button id="prevTrack">⏮️</button>
-        <button id="playPause">▶️</button>
-        <button id="nextTrack">⏭️</button>
-        <span id="trackTitle"></span>
-        <span id="trackTime">0:00 / 0:00</span>
-      </div>
-      <input type="range" id="progressBar" min="0" value="0">
-    </section>
+  <section class="gallery">
+    <div class="music-card">
+      <h3>Night Call</h3>
+      <audio id="track1" controls src="https://music.apple.com/us/song/night-call/1814963677"></audio>
+      <div class="waveform" id="waveform1"></div>
+    </div>
+    <div class="music-card">
+      <h3>Track Two</h3>
+      <audio id="track2" controls src="music/track2.mp3"></audio>
+      <div class="waveform" id="waveform2"></div>
+    </div>
+    <div class="music-card">
+      <h3>Track Three</h3>
+      <audio id="track3" controls src="music/track3.mp3"></audio>
+      <div class="waveform" id="waveform3"></div>
+    </div>
+  </section>
 
-    <!-- Track List -->
-    <section class="track-list">
-      <h2>Tracks</h2>
-      <ul id="trackList"></ul>
-    </section>
+  <section class="stats">
+    <h2>Stats</h2>
+    <p>Total Streams: 145K+</p>
+    <p>Monthly Listeners: 22K+</p>
+  </section>
 
-    <!-- Spotify Embed -->
-    <section class="spotify">
-      <h2>Spotify</h2>
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/5XCbsOE3ym3tNGwS3UeJ2l?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </section>
+  <section class="artist-info">
+    <h2>About HoodieBxy</h2>
+    <p>HoodieBxy is an independent artist under [Your Label Name], known for mixing emotional flows with modern trap soul melodies.</p>
+  </section>
 
-    <!-- Artist Info -->
-    <section class="artist-info">
-      <h2>About HoodieBxy</h2>
-      <p>HoodieBxy is an independent artist under the <strong>Fearless Ghost Entertainment</strong>, blending melodic trap with soulful production. </p>
-    </section>
+  <section style="padding: 2rem; text-align: center">
+    <h2>Listen on Spotify</h2>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/6XyY86QOPPrYVGvF9ch6wz?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </section>
 
-    <!-- Stats -->
-    <section class="stats">
-      <h2>Stats</h2>
-      <ul>
-        <li><strong>Monthly Streams:</strong> 1.2M+</li>
-        <li><strong>Followers:</strong> 75K+</li>
-        <li><strong>Albums:</strong> 4 Released</li>
-      </ul>
-    </section>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      document.body.classList.toggle('light');
+    }
 
-  </main>
+    function initWaveform(audioId, waveformId) {
+      const audio = document.getElementById(audioId);
+      const waveform = WaveSurfer.create({
+        container: `#${waveformId}`,
+        waveColor: '#888',
+        progressColor: '#00f0ff',
+        height: 100,
+        responsive: true
+      });
+      waveform.load(audio.src);
+      audio.addEventListener('play', () => waveform.play());
+      audio.addEventListener('pause', () => waveform.pause());
+    }
 
-  <footer>
-    <p>&copy; 2025 HoodieBxy. Powered by Fearless Ghost Entertainment</p>
-  </footer>
-
-  <script src="app.js"></script>
+    window.addEventListener('DOMContentLoaded', () => {
+      initWaveform('track1', 'waveform1');
+      initWaveform('track2', 'waveform2');
+      initWaveform('track3', 'waveform3');
+    });
+  </script>
 </body>
 </html>
