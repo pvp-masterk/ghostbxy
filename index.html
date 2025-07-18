@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <title>HoodieBxy - Music Gallery</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HoodieBxy - Official</title>
   <style>
     :root {
       --bg: #000;
       --text: #fff;
-      --card: #111;
+      --card: rgba(255,255,255,0.05);
       --accent: #fff;
+      --blur: blur(12px);
+      --glow: 0 0 8px #fff;
     }
 
     [data-theme="light"] {
-      --bg: #fff;
+      --bg: #f9f9f9;
       --text: #000;
-      --card: #f0f0f0;
+      --card: rgba(0,0,0,0.05);
       --accent: #111;
+      --blur: blur(12px);
+      --glow: 0 0 0 transparent;
     }
 
     * {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       box-sizing: border-box;
       font-family: 'Segoe UI', sans-serif;
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       transition: background 0.5s, color 0.5s;
     }
 
     header {
+      position: sticky;
+      top: 0;
       padding: 20px 40px;
+      background: var(--card);
+      backdrop-filter: var(--blur);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--card);
-      border-bottom: 1px solid #444;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      z-index: 100;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: bold;
+      font-size: 26px;
+      font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     nav a {
@@ -63,83 +69,125 @@
     }
 
     .theme-switch {
-      cursor: pointer;
-      font-size: 16px;
       background: transparent;
       border: 1px solid var(--text);
-      padding: 5px 10px;
-      border-radius: 6px;
       color: var(--text);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .theme-switch:hover {
+      background: var(--text);
+      color: var(--bg);
     }
 
     section {
-      padding: 60px 20px;
+      padding: 80px 20px;
+      animation: fadeUp 1s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .section-title {
-      font-size: 32px;
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 34px;
+      margin-bottom: 40px;
     }
 
     .music-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
       padding: 0 40px;
     }
 
     .track-card {
       background: var(--card);
-      border-radius: 12px;
+      backdrop-filter: var(--blur);
+      border-radius: 16px;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 15px rgba(255,255,255,0.05);
     }
 
     .track-card:hover {
-      transform: scale(1.02);
+      transform: translateY(-8px);
+      box-shadow: 0 0 25px rgba(255,255,255,0.2);
     }
 
     .track-card h3 {
       margin-bottom: 10px;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     iframe {
+      border: none;
       width: 100%;
       height: 80px;
-      border: none;
+      border-radius: 12px;
     }
 
     .stats {
       display: flex;
-      justify-content: center;
-      gap: 40px;
       flex-wrap: wrap;
-      text-align: center;
+      justify-content: center;
+      gap: 30px;
     }
 
     .stat {
       background: var(--card);
       padding: 30px;
-      border-radius: 12px;
-      min-width: 180px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      border-radius: 14px;
+      min-width: 160px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .stat:hover {
+      transform: scale(1.05);
+      box-shadow: var(--glow);
     }
 
     .stat h2 {
       font-size: 36px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      transition: 0.4s ease;
     }
 
     .stat p {
+      opacity: 0.7;
       font-size: 14px;
-      opacity: 0.8;
+    }
+
+    .socials {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .socials a {
+      display: inline-block;
+      margin: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none;
+      transition: 0.3s ease;
+      border: 1px solid var(--text);
+    }
+
+    .socials a:hover {
+      background: var(--text);
+      color: var(--bg);
     }
 
     footer {
-      padding: 40px;
+      padding: 40px 20px;
       text-align: center;
       font-size: 14px;
       opacity: 0.5;
@@ -164,38 +212,38 @@
     <h2 class="section-title">🎧 Music Gallery</h2>
     <div class="music-gallery">
       <div class="track-card">
-        <h3>1. Night Shift</h3>
+        <h3>Khronic Dreams</h3>
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4bMjlo2JyWuiujvTqDPaev?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
       <div class="track-card">
-        <h3>2. Ghosted</h3>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2fEXdKr7kELKm2NskP5qwW?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <h3>Ghosted</h3>
+        <iframe src="https://open.spotify.com/embed/track/2fEXdKr7kELKm2NskP5qwW?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </div>
       <div class="track-card">
-        <h3>3. Bleed Slow</h3>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7Gn0nsm5Kq7OfL74J9Aqek?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <h3>Bleed Slow</h3>
+        <iframe src="https://open.spotify.com/embed/track/7Gn0nsm5Kq7OfL74J9Aqek?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </div>
     </div>
   </section>
 
   <!-- Stats -->
   <section id="stats">
-    <h2 class="section-title">📊 HoodieBxy Stats</h2>
+    <h2 class="section-title">📊 Stats</h2>
     <div class="stats">
       <div class="stat">
-        <h2>2.4M</h2>
+        <h2 class="count" data-target="2400000">0</h2>
         <p>Total Streams</p>
       </div>
       <div class="stat">
-        <h2>47K</h2>
+        <h2 class="count" data-target="47000">0</h2>
         <p>Monthly Listeners</p>
       </div>
       <div class="stat">
-        <h2>8</h2>
+        <h2 class="count" data-target="8">0</h2>
         <p>Released Tracks</p>
       </div>
       <div class="stat">
-        <h2>2025</h2>
+        <h2 class="count" data-target="2025">0</h2>
         <p>Debut Year</p>
       </div>
     </div>
@@ -203,26 +251,46 @@
 
   <!-- Socials -->
   <section id="socials">
-    <h2 class="section-title">🔗 Follow HoodieBxy</h2>
-    <div style="text-align:center;">
-      <a href="https://discord.gg/yourlink" target="_blank" class="theme-switch">Discord</a>
-      <a href="https://music.apple.com/yourpage" target="_blank" class="theme-switch">Apple Music</a>
-      <a href="https://instagram.com/hoodiebxy" target="_blank" class="theme-switch">Instagram</a>
-      <a href="https://twitter.com/hoodiebxy" target="_blank" class="theme-switch">Twitter</a>
+    <h2 class="section-title">🔗 Socials</h2>
+    <div class="socials">
+      <a href="https://discord.gg/yourlink" target="_blank">Discord</a>
+      <a href="https://music.apple.com/yourpage" target="_blank">Apple Music</a>
+      <a href="https://instagram.com/hoodiebxy" target="_blank">Instagram</a>
+      <a href="https://twitter.com/hoodiebxy" target="_blank">Twitter</a>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    © 2025 HoodieBxy. All Rights Reserved.
+    © 2025 HoodieBxy • All Rights Reserved
   </footer>
 
   <script>
     function toggleTheme() {
       const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      html.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+      const theme = html.getAttribute("data-theme");
+      html.setAttribute("data-theme", theme === "light" ? "dark" : "light");
     }
+
+    // Animate number counters
+    document.addEventListener("DOMContentLoaded", () => {
+      const counters = document.querySelectorAll(".count");
+      counters.forEach(counter => {
+        const updateCount = () => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText.replace(/,/g, '');
+          const increment = target / 100;
+
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment).toLocaleString();
+            requestAnimationFrame(updateCount);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
+        };
+        updateCount();
+      });
+    });
   </script>
 </body>
 </html>
