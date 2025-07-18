@@ -1,245 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HoodieBxy – Official Music Site</title>
-  <style>
-    @font-face {
-      font-family: 'HoodieFont';
-      src: url('/fonts/HoodieBxyCustomFont.woff2') format('woff2');
-      font-display: swap;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'HoodieFont', sans-serif;
-      transition: background 0.5s, color 0.5s;
-      background: black;
-      color: white;
-    }
-
-    body.light {
-      background: white;
-      color: black;
-    }
-
-    #loadingScreen {
-      position: fixed;
-      inset: 0;
-      background: black;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    #modeToggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 999;
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .main-container {
-      padding: 60px 20px;
-    }
-
-    header {
-      text-align: center;
-    }
-
-    .artist-name {
-      font-size: 3rem;
-    }
-
-    .label {
-      font-style: italic;
-    }
-
-    #musicPlayer {
-      text-align: center;
-      margin: 30px 0;
-    }
-
-    canvas {
-      width: 100%;
-      height: 100px;
-      background: #111;
-    }
-
-    .controls button {
-      font-size: 1.5rem;
-      margin: 0 10px;
-      background: none;
-      color: inherit;
-      border: none;
-      cursor: pointer;
-    }
-
-    #lyricsOverlay {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 1.2rem;
-    }
-
-    #spotifyEmbed iframe {
-      width: 100%;
-      border: none;
-    }
-
-    .bio, #stats {
-      margin-top: 40px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HoodieBxy Music</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="dark">
+<body>
+
+  <!-- Loading Screen -->
   <div id="loadingScreen">
-    <h1 class="logo-intro">HoodieBxy</h1>
-    <p class="tagline">Official Music Experience</p>
+    <div class="spinner"></div>
+    <h1>HoodieBxy</h1>
   </div>
 
-  <button id="modeToggle">🌓</button>
+  <!-- Header -->
+  <header>
+    <h1>HoodieBxy</h1>
+    <button id="themeToggle">🌓</button>
+  </header>
 
-  <div class="main-container">
-    <header>
-      <h1 class="artist-name">HoodieBxy</h1>
-      <p class="label">Signed to Fearless Ghost Entertainment™</p>
-    </header>
-
-    <section id="musicPlayer">
+  <!-- Music Player -->
+  <main>
+    <section class="player">
       <canvas id="waveform"></canvas>
       <div class="controls">
-        <button id="prevTrack">⏮</button>
-        <button id="playPause">▶</button>
-        <button id="nextTrack">⏭</button>
-        <div class="track-info">
-          <span id="trackTitle">Track Title</span> — <span id="trackDuration">00:00</span>
-        </div>
+        <button id="prevTrack">⏮️</button>
+        <button id="playPause">▶️</button>
+        <button id="nextTrack">⏭️</button>
+        <span id="trackTitle"></span>
+        <span id="trackTime">0:00 / 0:00</span>
       </div>
+      <input type="range" id="progressBar" min="0" value="0">
     </section>
 
-    <div id="lyricsOverlay">
-      <p id="lyricsLine">♪ ...</p>
-    </div>
-
-    <section id="spotifyEmbed">
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0e..." height="80" allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
+    <!-- Track List -->
+    <section class="track-list">
+      <h2>Tracks</h2>
+      <ul id="trackList"></ul>
     </section>
 
-    <section class="bio">
+    <!-- Spotify Embed -->
+    <section class="spotify">
+      <h2>Spotify</h2>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/5XCbsOE3ym3tNGwS3UeJ2l?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </section>
+
+    <!-- Artist Info -->
+    <section class="artist-info">
       <h2>About HoodieBxy</h2>
-      <p>A multi-genre artist redefining mood with each beat. Explore the HoodieBxy universe.</p>
+      <p>HoodieBxy is an independent artist under the <strong>Fearless Ghost Entertainment</strong>, blending melodic trap with soulful production. </p>
     </section>
 
-    <section id="stats">
-      <h2>Streaming Stats</h2>
+    <!-- Stats -->
+    <section class="stats">
+      <h2>Stats</h2>
       <ul>
-        <li>🔥 Monthly Listeners: <span id="monthlyListeners">120K</span></li>
-        <li>🎵 Total Streams: <span id="totalStreams">5.2M</span></li>
-        <li>📀 Albums Released: <span id="albumsReleased">2</span></li>
+        <li><strong>Monthly Streams:</strong> 1.2M+</li>
+        <li><strong>Followers:</strong> 75K+</li>
+        <li><strong>Albums:</strong> 4 Released</li>
       </ul>
     </section>
-  </div>
 
-  <audio id="audio" preload="metadata"></audio>
+  </main>
 
-  <script>
-    const audio = document.getElementById('audio');
-    const playPause = document.getElementById('playPause');
-    const trackTitle = document.getElementById('trackTitle');
-    const trackDuration = document.getElementById('trackDuration');
-    const lyricsLine = document.getElementById('lyricsLine');
-    const modeToggle = document.getElementById('modeToggle');
-    const loadingScreen = document.getElementById('loadingScreen');
+  <footer>
+    <p>&copy; 2025 HoodieBxy. Powered by Fearless Ghost Entertainment</p>
+  </footer>
 
-    const tracks = [
-      {
-        title: 'Dream State',
-        src: '/assets/music/track1.mp3',
-        lyrics: '/assets/lyrics/track1.lrc'
-      },
-      {
-        title: 'Midnight Drive',
-        src: '/assets/music/track2.mp3',
-        lyrics: '/assets/lyrics/track2.lrc'
-      }
-    ];
-
-    let currentTrack = 0;
-    let lyrics = [];
-    let lyricsIndex = 0;
-
-    function loadTrack(index) {
-      const track = tracks[index];
-      audio.src = track.src;
-      trackTitle.textContent = track.title;
-      loadLyrics(track.lyrics);
-    }
-
-    function loadLyrics(path) {
-      fetch(path)
-        .then(res => res.text())
-        .then(text => {
-          lyrics = text.split('\n').map(line => {
-            const match = line.match(/\[(\d+):(\d+).(\d+)\](.*)/);
-            if (!match) return null;
-            const [, min, sec, ms, textLine] = match;
-            const time = parseInt(min) * 60 + parseInt(sec) + parseInt(ms) / 1000;
-            return { time, text: textLine };
-          }).filter(Boolean);
-        });
-    }
-
-    playPause.onclick = () => {
-      if (audio.paused) {
-        audio.play();
-        playPause.textContent = '⏸';
-      } else {
-        audio.pause();
-        playPause.textContent = '▶';
-      }
-    };
-
-    document.getElementById('prevTrack').onclick = () => {
-      currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-      loadTrack(currentTrack);
-      audio.play();
-    };
-
-    document.getElementById('nextTrack').onclick = () => {
-      currentTrack = (currentTrack + 1) % tracks.length;
-      loadTrack(currentTrack);
-      audio.play();
-    };
-
-    audio.ontimeupdate = () => {
-      const current = audio.currentTime;
-      if (lyrics[lyricsIndex + 1] && current > lyrics[lyricsIndex + 1].time) {
-        lyricsIndex++;
-      }
-      if (lyrics[lyricsIndex]) {
-        lyricsLine.textContent = '♪ ' + lyrics[lyricsIndex].text;
-      }
-      const mins = Math.floor(current / 60);
-      const secs = Math.floor(current % 60).toString().padStart(2, '0');
-      trackDuration.textContent = `${mins}:${secs}`;
-    };
-
-    modeToggle.onclick = () => {
-      document.body.classList.toggle('light');
-    };
-
-    window.onload = () => {
-      setTimeout(() => loadingScreen.style.display = 'none', 1000);
-      loadTrack(currentTrack);
-    };
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
