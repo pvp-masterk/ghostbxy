@@ -192,10 +192,23 @@
       font-size: 14px;
       opacity: 0.5;
     }
+
+  @keyframes pulse {
+    0% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.2; transform: scale(1); }
+  }
+
   </style>
 </head>
 <body>
-
+<div id="loader" style="
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:#000; color:#fff; display:flex; align-items:center; justify-content:center;
+  z-index:9999; font-size:32px; letter-spacing:2px; transition:opacity 1s ease;
+">
+  <div style="animation: pulse 1.5s infinite">HoodieBxy</div>
+</div>
   <!-- Header -->
   <header>
     <div class="logo">HoodieBxy</div>
@@ -209,21 +222,14 @@
 
   <!-- Music Gallery -->
   <section id="music">
-    <h2 class="section-title">🎧 Music Gallery</h2>
-    <div class="music-gallery">
-      <div class="track-card">
-        <h3>Khronic Dreams</h3>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4bMjlo2JyWuiujvTqDPaev?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      <div class="track-card">
-        <h3>Ghosted</h3>
-        <iframe src="https://open.spotify.com/embed/track/2fEXdKr7kELKm2NskP5qwW?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-      </div>
-      <div class="track-card">
-        <h3>Bleed Slow</h3>
-        <iframe src="https://open.spotify.com/embed/track/7Gn0nsm5Kq7OfL74J9Aqek?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-      </div>
-    </div>
+    <div style="margin: 80px auto; max-width: 600px; padding: 30px; background: var(--card); border-radius: 14px;">
+  <h3 style="text-align:center; margin-bottom:10px;">Featured Track: Night Call</h3>
+  <canvas id="waveform" width="600" height="100" style="width:100%; border-radius:8px;"></canvas>
+  <audio id="audioPlayer" controls style="width:100%; margin-top: 15px;">
+    <source src="https://cdn.discordapp.com/attachments/1395135057059905666/1395291102789111858/6astard-x-ashura-kai-night-call-140-d-min.wav?ex=687b3b1a&is=6879e99a&hm=2db594240bee8531e4108c8d76ecdd2f7c0053d72afee18a29ea7e8cc2c281d0&" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
   </section>
 
   <!-- Stats -->
@@ -251,12 +257,11 @@
 
   <!-- Socials -->
   <section id="socials">
-    <h2 class="section-title">🔗 Socials</h2>
+    <h2 class="section-title"> Socials</h2>
     <div class="socials">
-      <a href="https://discord.gg/yourlink" target="_blank">Discord</a>
-      <a href="https://music.apple.com/yourpage" target="_blank">Apple Music</a>
-      <a href="https://instagram.com/hoodiebxy" target="_blank">Instagram</a>
-      <a href="https://twitter.com/hoodiebxy" target="_blank">Twitter</a>
+      <a href="https://music.apple.com/us/artist/hoodiebxy/1775615720" target="_blank">Apple Music</a>
+      <a href="https://open.spotify.com/artist/0jZtB2WeKe915nosz6ueiO?si=f2HBVvQ3ReCVGbnto2x4Rw" target="_blank">Spotify</a>
+      <a href="https://www.youtube.com/@FearlessGhxstsEntertainment" target="_blank">Youtube</a>
     </div>
   </section>
 
@@ -265,32 +270,50 @@
     © 2025 HoodieBxy • All Rights Reserved
   </footer>
 
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const theme = html.getAttribute("data-theme");
-      html.setAttribute("data-theme", theme === "light" ? "dark" : "light");
+ <script>
+  const audio = document.getElementById('audioPlayer');
+  const canvas = document.getElementById('waveform');
+  const ctx = canvas.getContext('2d');
+
+  let context = new AudioContext();
+  let src = context.createMediaElementSource(audio);
+  let analyser = context.createAnalyser();
+
+  src.connect(analyser);
+  analyser.connect(context.destination);
+
+  analyser.fftSize = 256;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+
+  function draw() {
+    requestAnimationFrame(draw);
+    analyser.getByteFrequencyData(dataArray);
+    ctx.fillStyle = "#111";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let barWidth = (canvas.width / bufferLength) * 2.5;
+    let barHeight;
+    let x = 0;
+
+    for(let i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i];
+      ctx.fillStyle = 'white';
+      ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+      x += barWidth + 1;
     }
+  }
 
-    // Animate number counters
-    document.addEventListener("DOMContentLoaded", () => {
-      const counters = document.querySelectorAll(".count");
-      counters.forEach(counter => {
-        const updateCount = () => {
-          const target = +counter.getAttribute('data-target');
-          const count = +counter.innerText.replace(/,/g, '');
-          const increment = target / 100;
+  audio.onplay = () => {
+    if (context.state === 'suspended') context.resume();
+    draw();
+  };
 
-          if (count < target) {
-            counter.innerText = Math.ceil(count + increment).toLocaleString();
-            requestAnimationFrame(updateCount);
-          } else {
-            counter.innerText = target.toLocaleString();
-          }
-        };
-        updateCount();
-      });
-    });
+    window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = 0;
+    setTimeout(() => loader.style.display = "none", 1000);
+  });
   </script>
 </body>
 </html>
