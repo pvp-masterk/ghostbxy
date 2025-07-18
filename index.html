@@ -1,319 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HoodieBxy - Official</title>
-  <style>
-    :root {
-      --bg: #000;
-      --text: #fff;
-      --card: rgba(255,255,255,0.05);
-      --accent: #fff;
-      --blur: blur(12px);
-      --glow: 0 0 8px #fff;
-    }
-
-    [data-theme="light"] {
-      --bg: #f9f9f9;
-      --text: #000;
-      --card: rgba(0,0,0,0.05);
-      --accent: #111;
-      --blur: blur(12px);
-      --glow: 0 0 0 transparent;
-    }
-
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.5s, color 0.5s;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      padding: 20px 40px;
-      background: var(--card);
-      backdrop-filter: var(--blur);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: var(--text);
-      opacity: 0.8;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      opacity: 1;
-    }
-
-    .theme-switch {
-      background: transparent;
-      border: 1px solid var(--text);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .theme-switch:hover {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    section {
-      padding: 80px 20px;
-      animation: fadeUp 1s ease both;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 34px;
-      margin-bottom: 40px;
-    }
-
-    .music-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      padding: 0 40px;
-    }
-
-    .track-card {
-      background: var(--card);
-      backdrop-filter: var(--blur);
-      border-radius: 16px;
-      padding: 20px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 0 15px rgba(255,255,255,0.05);
-    }
-
-    .track-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 25px rgba(255,255,255,0.2);
-    }
-
-    .track-card h3 {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-
-    iframe {
-      border: none;
-      width: 100%;
-      height: 80px;
-      border-radius: 12px;
-    }
-
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-    }
-
-    .stat {
-      background: var(--card);
-      padding: 30px;
-      border-radius: 14px;
-      min-width: 160px;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .stat:hover {
-      transform: scale(1.05);
-      box-shadow: var(--glow);
-    }
-
-    .stat h2 {
-      font-size: 36px;
-      margin-bottom: 8px;
-      transition: 0.4s ease;
-    }
-
-    .stat p {
-      opacity: 0.7;
-      font-size: 14px;
-    }
-
-    .socials {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .socials a {
-      display: inline-block;
-      margin: 8px;
-      padding: 10px 18px;
-      border-radius: 10px;
-      background: var(--card);
-      color: var(--text);
-      text-decoration: none;
-      transition: 0.3s ease;
-      border: 1px solid var(--text);
-    }
-
-    .socials a:hover {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    footer {
-      padding: 40px 20px;
-      text-align: center;
-      font-size: 14px;
-      opacity: 0.5;
-    }
-
-  @keyframes pulse {
-    0% { opacity: 0.2; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
-    100% { opacity: 0.2; transform: scale(1); }
-  }
-
-  </style>
+  <title>HoodieBxy – Official Music Site</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preload" href="/fonts/HoodieBxyCustomFont.woff2" as="font" type="font/woff2" crossorigin>
+  <script defer src="script.js"></script>
 </head>
-<body>
-<div id="loader" style="
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:#000; color:#fff; display:flex; align-items:center; justify-content:center;
-  z-index:9999; font-size:32px; letter-spacing:2px; transition:opacity 1s ease;
-">
-  <div style="animation: pulse 1.5s infinite">HoodieBxy</div>
-</div>
-  <!-- Header -->
-  <header>
-    <div class="logo">HoodieBxy</div>
-    <nav>
-      <a href="#music">Music</a>
-      <a href="#stats">Stats</a>
-      <a href="#socials">Socials</a>
-    </nav>
-    <button class="theme-switch" onclick="toggleTheme()">🌓 Mode</button>
-  </header>
+<body class="dark">
+  <!-- Loading Screen -->
+  <div id="loadingScreen">
+    <h1 class="logo-intro">HoodieBxy</h1>
+    <p class="tagline">Official Music Experience</p>
+  </div>
 
-  <!-- Music Gallery -->
-  <section id="music">
-    <div style="margin: 80px auto; max-width: 600px; padding: 30px; background: var(--card); border-radius: 14px;">
-  <h3 style="text-align:center; margin-bottom:10px;">Featured Track: Night Call</h3>
-  <canvas id="waveform" width="600" height="100" style="width:100%; border-radius:8px;"></canvas>
-  <audio id="audioPlayer" controls style="width:100%; margin-top: 15px;">
-    <source src="https://cdn.discordapp.com/attachments/1395135057059905666/1395291102789111858/6astard-x-ashura-kai-night-call-140-d-min.wav?ex=687b3b1a&is=6879e99a&hm=2db594240bee8531e4108c8d76ecdd2f7c0053d72afee18a29ea7e8cc2c281d0&" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-</div>
-  </section>
+  <!-- Toggle Light/Dark -->
+  <button id="modeToggle">🌓</button>
 
-  <!-- Stats -->
-  <section id="stats">
-    <h2 class="section-title">📊 Stats</h2>
-    <div class="stats">
-      <div class="stat">
-        <h2 class="count" data-target="2400000">0</h2>
-        <p>Total Streams</p>
+  <!-- Main Section -->
+  <div class="main-container">
+    <header>
+      <h1 class="artist-name">HoodieBxy</h1>
+      <p class="label">Signed to HoodieWave™</p>
+    </header>
+
+    <!-- Music Player -->
+    <section id="musicPlayer">
+      <canvas id="waveform"></canvas>
+      <div class="controls">
+        <button id="prevTrack">⏮</button>
+        <button id="playPause">▶</button>
+        <button id="nextTrack">⏭</button>
+        <div class="track-info">
+          <span id="trackTitle">Track Title</span>
+          <span id="trackDuration">00:00</span>
+        </div>
       </div>
-      <div class="stat">
-        <h2 class="count" data-target="47000">0</h2>
-        <p>Monthly Listeners</p>
-      </div>
-      <div class="stat">
-        <h2 class="count" data-target="8">0</h2>
-        <p>Released Tracks</p>
-      </div>
-      <div class="stat">
-        <h2 class="count" data-target="2025">0</h2>
-        <p>Debut Year</p>
-      </div>
+    </section>
+
+    <!-- Lyrics Overlay -->
+    <div id="lyricsOverlay">
+      <p id="lyricsLine">♪ ...</p>
     </div>
-  </section>
 
-  <!-- Socials -->
-  <section id="socials">
-    <h2 class="section-title"> Socials</h2>
-    <div class="socials">
-      <a href="https://music.apple.com/us/artist/hoodiebxy/1775615720" target="_blank">Apple Music</a>
-      <a href="https://open.spotify.com/artist/0jZtB2WeKe915nosz6ueiO?si=f2HBVvQ3ReCVGbnto2x4Rw" target="_blank">Spotify</a>
-      <a href="https://www.youtube.com/@FearlessGhxstsEntertainment" target="_blank">Youtube</a>
-    </div>
-  </section>
+    <!-- Spotify Embed -->
+    <section id="spotifyEmbed">
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0e..." width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    © 2025 HoodieBxy • All Rights Reserved
-  </footer>
+    <!-- Artist Info -->
+    <section class="bio">
+      <h2>About HoodieBxy</h2>
+      <p>A multi-genre artist redefining mood with each beat. Explore the HoodieBxy universe.</p>
+    </section>
 
- <script>
-  const audio = document.getElementById('audioPlayer');
-  const canvas = document.getElementById('waveform');
-  const ctx = canvas.getContext('2d');
-
-  let context = new AudioContext();
-  let src = context.createMediaElementSource(audio);
-  let analyser = context.createAnalyser();
-
-  src.connect(analyser);
-  analyser.connect(context.destination);
-
-  analyser.fftSize = 256;
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-
-  function draw() {
-    requestAnimationFrame(draw);
-    analyser.getByteFrequencyData(dataArray);
-    ctx.fillStyle = "#111";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    let barWidth = (canvas.width / bufferLength) * 2.5;
-    let barHeight;
-    let x = 0;
-
-    for(let i = 0; i < bufferLength; i++) {
-      barHeight = dataArray[i];
-      ctx.fillStyle = 'white';
-      ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
-      x += barWidth + 1;
-    }
-  }
-
-  audio.onplay = () => {
-    if (context.state === 'suspended') context.resume();
-    draw();
-  };
-
-    window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    loader.style.opacity = 0;
-    setTimeout(() => loader.style.display = "none", 1000);
-  });
-  </script>
+    <!-- Stats Section -->
+    <section id="stats">
+      <h2>Streaming Stats</h2>
+      <ul>
+        <li>🔥 Monthly Listeners: <span id="monthlyListeners">120K</span></li>
+        <li>🎵 Total Streams: <span id="totalStreams">5.2M</span></li>
+        <li>📀 Albums Released: <span id="albumsReleased">2</span></li>
+      </ul>
+    </section>
+  </div>
 </body>
 </html>
